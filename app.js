@@ -36,12 +36,16 @@ const blogSchema = {
 
 const Post = mongoose.model("Post", blogSchema);
 
-let posts = [];
-
 app.get("/", function (req, res) {
-  res.render("home", {
-    startingContent: homeStartingContent,
-    posts: posts,
+  Post.find({}, function (err, posts) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("home", {
+        startingContent: homeStartingContent,
+        posts: posts,
+      });
+    }
   });
 });
 
